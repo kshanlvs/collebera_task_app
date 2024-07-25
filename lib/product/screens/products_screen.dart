@@ -16,51 +16,11 @@ class ProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  return Scaffold(
-      appBar: AppBar(
-        title: const Text('Hello, Andres'),
-        actions: [
-          Consumer<CartProvider>(
-            builder: (context, cartProvider, child) {
-              return Stack(
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.shopping_cart),
-                    onPressed: () {
-                      context.go("/cartScreen");
-                    },
-                  ),
-                  Positioned(
-                    right: 0,
-                    child: Container(
-                      padding: const EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      constraints: const BoxConstraints(
-                        minWidth: 16,
-                        minHeight: 16,
-                      ),
-                      child: Text(
-                        '${cartProvider.cartCount}',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  )
-                ],
-              );
-            },
-          ),
-        ],
-      ),
-      body: Consumer2<ProductProvider,CartProvider>(
-        builder: (context, provider,cartProvider, child) {
-          if (provider.isLoading) {
+    return Scaffold(
+      appBar: _buildAppBar(context),
+      body: Consumer<ProductProvider>(
+        builder: (context, productProvider, child) {
+          if (productProvider.isLoading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -71,20 +31,21 @@ class ProductScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, // Number of columns
-                  childAspectRatio:.5, // Aspect ratio of each card
+                  childAspectRatio: .5, // Aspect ratio of each card
                   crossAxisSpacing: 8.0,
                   mainAxisSpacing: 8.0,
                 ),
-                itemCount: provider.products.length,
+                itemCount: productProvider.products.length,
                 itemBuilder: (context, index) {
-                  Products product = provider.products[index];
+                  Products product = productProvider.products[index];
                   return InkWell(
                     onTap: () {
-                      context.go('/productDetails', extra: {"product": product});
+                      context
+                          .go('/productDetails', extra: {"product": product});
                     },
                     child: ProductCard(
                       onTapAddToCart: () {
-                        cartProvider.addItemToCart(context,product);
+                        context.read<CartProvider>().addItemToCart(context, product);
                       },
                       imageUrl: product.image ?? "",
                       title: product.title ?? "NA",
@@ -98,6 +59,58 @@ class ProductScreen extends StatelessWidget {
           }
         },
       ),
+    );
+  }
+
+  AppBar _buildAppBar(BuildContext context) {
+    return AppBar(
+      title: const Text.rich(TextSpan(children: [
+        TextSpan(text: "Hello,", style: TextStyle(fontSize: 16)),
+        TextSpan(
+            text: " Kishan", style: TextStyle(color: Colors.orangeAccent))
+      ])),
+      actions: [
+        _buildCartIcon(context),
+      ],
+    );
+  }
+
+  Widget _buildCartIcon(BuildContext context) {
+    return Consumer<CartProvider>(
+      builder: (context, cartProvider, child) {
+        return Stack(
+          children: [
+            IconButton(
+              icon: const Icon(Icons.shopping_cart),
+              onPressed: () {
+                context.go("/cartScreen");
+              },
+            ),
+            Positioned(
+              right: 0,
+              child: Container(
+                padding: const EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                constraints: const BoxConstraints(
+                  minWidth: 16,
+                  minHeight: 16,
+                ),
+                child: Text(
+                  '${cartProvider.cartCount}',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            )
+          ],
+        );
+      },
     );
   }
 }

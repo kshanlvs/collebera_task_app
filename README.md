@@ -14,42 +14,12 @@ This Flutter app displays a list of products from a mock API, shows product deta
 
 - Uses a mock API to fetch product data.
 
-### State Management
-
-- Uses [State Management Solution] (e.g., MobX, Bloc, Provider, Riverpod, etc.).
-
-### UI/UX
-
-- Creates a user-friendly interface using appropriate Flutter widgets (ListView, Navigator, etc.).
-
-### Code Quality
-
-- Writes clean, readable, maintainable code.
-- Follows best practices and uses proper naming conventions.
-
-### Documentation
-
-- Includes a README with setup instructions and an explanation of the architecture.
-
-## Deliverables
-
-- Complete Flutter project code in a GitHub repository.
-- README file with setup and usage instructions.
-
-## Evaluation Criteria
-
-- Code quality and adherence to best practices.
-- Proper use of state management.
-- Correct API integration and data handling.
-- UI/UX design and functionality.
-- Clarity of documentation.
-
 ## Setup Instructions
 
 1. **Clone the Repository**
     ```bash
-    git clone <repository_url>
-    cd <repository_directory>
+    git clone <https://github.com/kshanlvs/collebera_task_app.git>
+    cd <collebera_task_app>
     ```
 
 2. **Install Dependencies**
@@ -72,7 +42,7 @@ The app follows a MVC (Model View Controller) pattern:
 
 ## State Management
 
-This project uses [State Management Solution] for managing the state of the application.
+This project uses Provider for managing the state of the application.
 
 ## API Integration
 
