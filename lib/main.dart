@@ -1,17 +1,33 @@
-import 'package:collebera_task_app/product/providers/cart_provider.dart';
-import 'package:collebera_task_app/router.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:collebera_task_app/product/providers/cart_provider.dart';
+import 'package:collebera_task_app/router.dart';
 
+import 'core/widgets/error_widget.dart';
 
-void main() async{
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(MultiProvider(
-    providers: [ChangeNotifierProvider(create:(context) {
-     return CartProvider();
-    },)],
-    child: const MyApp()));
+  // Set up global error handling
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.presentError(details);
+    // Navigate to the error page
+    navigatorKey.currentState?.pushNamed('/error');
+  };
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => CartProvider(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -21,8 +37,23 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: router,
       debugShowCheckedModeBanner: false,
-      title: 'Logistifie',
+      title: 'Collebera Task App',
       theme: _themeData(),
+      builder: (context, child) {
+        return Navigator(
+          key: navigatorKey,
+          onGenerateRoute: (RouteSettings settings) {
+            return MaterialPageRoute(
+              builder: (context) {
+                if (settings.name == '/error') {
+                  return const ErrorPage();
+                }
+                return child!;
+              },
+            );
+          },
+        );
+      },
     );
   }
 
