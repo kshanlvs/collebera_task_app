@@ -1,21 +1,19 @@
 class Products {
-  int? id;
-  String? title;
-  num? price;
-  String? description;
-  String? category;
-  String? image;
-  Rating? rating;
-  int quantity;
+  final int id;
+  final String title;
+  final num price;
+  final String description;
+  final String category;
+  final String image;
+  final int quantity;
 
   Products({
-    this.id,
-    this.title,
-    this.price,
-    this.description,
-    this.category,
-    this.image,
-    this.rating,
+    required this.id,
+    required this.title,
+    required this.price,
+    required this.description,
+    required this.category,
+    required this.image,
     this.quantity = 1,
   });
 
@@ -27,22 +25,30 @@ class Products {
       description: json['description'],
       category: json['category'],
       image: json['image'],
-      rating: json['rating'] != null ? Rating.fromJson(json['rating']) : null,
+     
       quantity: json['quantity'] ?? 1,
     );
   }
-}
 
-class Rating {
-  num? rate;
-  int? count;
+  Products copyWith({
+    int? id,
+    String? title,
+    num? price,
+    String? description,
+    String? category,
+    String? image,
 
-  Rating({this.rate, this.count});
+    int? quantity,
+  }) {
+    return Products(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      price: price ?? this.price,
+      description: description ?? this.description,
+      category: category ?? this.category,
+      image: image ?? this.image,
 
-  factory Rating.fromJson(Map<String, dynamic> json) {
-    return Rating(
-      rate: json['rate'],
-      count: json['count'],
+      quantity: quantity ?? this.quantity,
     );
   }
 }

@@ -42,34 +42,40 @@ class CartProvider extends ChangeNotifier {
       _cartList.removeWhere((item) => item.id == product.id);
       notifyListeners();
     } catch (e) {
-      throw Exception(e.toString());
+      throw Exception('Failed to remove ${product.title} from cart: $e');
     }
   }
 
   void increaseQuantity(Products product) {
     try {
-      product.quantity = product.quantity + 1;
-      notifyListeners();
+      _updateProductQuantity(product, product.quantity + 1);
     } catch (e) {
-      throw Exception(e.toString());
+      throw Exception('Failed to increase quantity for ${product.title}: $e');
     }
   }
 
   void decreaseQuantity(Products product) {
     try {
       if (product.quantity > 1) {
-        product.quantity = product.quantity - 1;
+        _updateProductQuantity(product, product.quantity - 1);
       } else {
         removeItemFromCart(product);
       }
-      notifyListeners();
     } catch (e) {
-      throw Exception(e.toString());
+      throw Exception('Failed to decrease quantity for ${product.title}: $e');
+    }
+  }
+
+  void _updateProductQuantity(Products product, int newQuantity) {
+    int index = _cartList.indexWhere((item) => item.id == product.id);
+    if (index != -1) {
+      _cartList[index] = _cartList[index].copyWith(quantity: newQuantity);
+      notifyListeners();
     }
   }
 
   double getTotalPrice() {
     return _cartList.fold(
-        0.0, (total, current) => total + (current.price! * current.quantity));
+        0.0, (total, current) => total + (current.price * current.quantity));
   }
 }
