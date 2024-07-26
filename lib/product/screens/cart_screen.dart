@@ -27,12 +27,12 @@ class CartScreen extends StatelessWidget {
                       minLeadingWidth: 80,
                       leading: FadeInImage.assetNetwork(
                         placeholder: "assets/images/placeholder-image.png",
-                        image: product.image ?? "",
+                        image: product.image,
                         fit: BoxFit.cover,
                         fadeInDuration: const Duration(milliseconds: 500),
                       ),
                       title: Text(
-                        product.title ?? "",
+                        product.title,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -45,7 +45,8 @@ class CartScreen extends StatelessWidget {
                               Icons.remove,
                               color: Colors.orangeAccent,
                             ),
-                            onPressed: () => cartProvider.decreaseQuantity(product),
+                            onPressed: () =>
+                                cartProvider.decreaseQuantity(product),
                           ),
                           Text(
                             '${product.quantity}',
@@ -59,14 +60,16 @@ class CartScreen extends StatelessWidget {
                               Icons.add,
                               color: Colors.orangeAccent,
                             ),
-                            onPressed: () => cartProvider.increaseQuantity(product),
+                            onPressed: () =>
+                                cartProvider.increaseQuantity(product),
                           ),
                           IconButton(
                             icon: const Icon(
                               Icons.delete,
                               color: Colors.redAccent,
                             ),
-                            onPressed: () => cartProvider.removeItemFromCart(product),
+                            onPressed: () =>
+                                cartProvider.removeItemFromCart(product),
                           ),
                         ],
                       ),

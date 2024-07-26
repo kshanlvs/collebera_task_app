@@ -30,18 +30,15 @@ class ProductDetailsScreen extends StatelessWidget {
             children: [
               Center(
                   child: FadeInImage.assetNetwork(
-                placeholder:
-                    "assets/images/placeholder-image.png", // Path to your placeholder image
-                image: product.image ?? "",
+                placeholder: "assets/images/placeholder-image.png",
+                image: product.image,
                 height: screenWidth * 0.6,
                 fit: BoxFit.cover,
-                fadeInDuration: const Duration(
-                    milliseconds:
-                        500), // Optional: specify the fade-in duration
+                fadeInDuration: const Duration(milliseconds: 500),
               )),
               const SizedBox(height: 16.0),
               Text(
-                product.title ?? "",
+                product.title,
                 style: const TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
@@ -50,12 +47,12 @@ class ProductDetailsScreen extends StatelessWidget {
               const SizedBox(height: 8.0),
               const Divider(color: Colors.black),
               Text(
-                product.description ?? "",
+                product.description,
                 style: const TextStyle(fontSize: 14.0, color: Colors.grey),
               ),
               const SizedBox(height: 16.0),
               Text(
-                '\$${product.price?.toStringAsFixed(2)}',
+                '\$${product.price.toStringAsFixed(2)}',
                 style: const TextStyle(
                   fontSize: 24.0,
                   fontWeight: FontWeight.bold,
@@ -98,7 +95,9 @@ class ProductDetailsScreen extends StatelessWidget {
                   ),
                   child: TextButton.icon(
                     onPressed: () {
-                      context.read<CartProvider>().addItemToCart(context, product);
+                      context
+                          .read<CartProvider>()
+                          .addItemToCart(context, product);
                     },
                     icon: const Icon(Icons.shopping_cart_outlined),
                     label: const Text(

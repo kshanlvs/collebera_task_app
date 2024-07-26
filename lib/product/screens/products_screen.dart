@@ -30,8 +30,8 @@ class ProductScreen extends StatelessWidget {
               child: GridView.builder(
                 padding: const EdgeInsets.all(8.0),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // Number of columns
-                  childAspectRatio: .5, // Aspect ratio of each card
+                  crossAxisCount: 2,
+                  childAspectRatio: .5,
                   crossAxisSpacing: 8.0,
                   mainAxisSpacing: 8.0,
                 ),
@@ -45,12 +45,14 @@ class ProductScreen extends StatelessWidget {
                     },
                     child: ProductCard(
                       onTapAddToCart: () {
-                        context.read<CartProvider>().addItemToCart(context, product);
+                        context
+                            .read<CartProvider>()
+                            .addItemToCart(context, product);
                       },
-                      imageUrl: product.image ?? "",
-                      title: product.title ?? "NA",
-                      description: product.description ?? "NA",
-                      price: product.price ?? 0,
+                      imageUrl: product.image,
+                      title: product.title,
+                      description: product.description,
+                      price: product.price,
                     ),
                   );
                 },
@@ -64,11 +66,13 @@ class ProductScreen extends StatelessWidget {
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      title: const Text.rich(TextSpan(children: [
-        TextSpan(text: "Hello,", style: TextStyle(fontSize: 16)),
-        TextSpan(
-            text: " Kishan", style: TextStyle(color: Colors.orangeAccent))
-      ])),
+      title: const Text.rich(
+        TextSpan(children: [
+          TextSpan(text: "Hello,", style: TextStyle(fontSize: 16)),
+          TextSpan(
+              text: " Kishan", style: TextStyle(color: Colors.orangeAccent))
+        ]),
+      ),
       actions: [
         _buildCartIcon(context),
       ],

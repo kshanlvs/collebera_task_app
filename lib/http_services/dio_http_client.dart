@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'http_client.dart';
 
 class DioHttpClient implements HttpClient {
@@ -42,7 +43,6 @@ class DioHttpClient implements HttpClient {
     } else {
       errorMessage = 'Unexpected error occurred: ${error.message}';
     }
-    log('Error: $errorMessage');
     return Response(
       requestOptions: error.requestOptions,
       statusMessage: errorMessage,
@@ -53,17 +53,26 @@ class DioHttpClient implements HttpClient {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (RequestOptions options, RequestInterceptorHandler handler) {
-          log('Request: ${options.method} ${options.path}');
+          if (kDebugMode) {
+            log('Request: ${options.method} ${options.path}');
+          }
+
           return handler.next(options);
         },
         onResponse: (Response response, ResponseInterceptorHandler handler) {
-          log('Response: ${response.statusCode} ${response.data}');
+          if (kDebugMode) {
+            log('Response: ${response.statusCode} ${response.data}');
+          }
+
           return handler.next(response);
         },
         onError: (DioException error, ErrorInterceptorHandler handler) {
-          log('-----ApiError[${error.response?.statusCode}]-----');
-          log('=====> Endpoint: ${error.response?.requestOptions.path} <=====');
-          log('ErrorResponse: ${error.response?.data}');
+          if (kDebugMode) {
+            log('-----ApiError[${error.response?.statusCode}]-----');
+            log('=====> Endpoint: ${error.response?.requestOptions.path} <=====');
+            log('ErrorResponse: ${error.response?.data}');
+          }
+
           return handler.next(error);
         },
       ),

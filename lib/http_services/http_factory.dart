@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 
@@ -9,7 +8,7 @@ class HttpClientFactory {
   static HttpClient createHttpClient() {
     final dio = DioForNative();
     const String apiUrl = "https://fakestoreapi.com";
-      dio.options = BaseOptions(baseUrl: apiUrl);
+    dio.options = BaseOptions(baseUrl: apiUrl);
     return DioHttpClient(dio);
   }
 }

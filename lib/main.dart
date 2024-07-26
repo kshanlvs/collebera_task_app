@@ -22,15 +22,15 @@ void main() {
           create: (context) => CartProvider(),
         ),
       ],
-      child: const MyApp(),
+      child: const ColleberaTaskApp(),
     ),
   );
 }
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class ColleberaTaskApp extends StatelessWidget {
+  const ColleberaTaskApp({super.key});
 
   @override
   Widget build(BuildContext context) {

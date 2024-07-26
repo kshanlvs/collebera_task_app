@@ -25,7 +25,6 @@ class Products {
       description: json['description'],
       category: json['category'],
       image: json['image'],
-     
       quantity: json['quantity'] ?? 1,
     );
   }
@@ -37,7 +36,6 @@ class Products {
     String? description,
     String? category,
     String? image,
-
     int? quantity,
   }) {
     return Products(
@@ -47,7 +45,6 @@ class Products {
       description: description ?? this.description,
       category: category ?? this.category,
       image: image ?? this.image,
-
       quantity: quantity ?? this.quantity,
     );
   }

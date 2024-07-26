@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:collebera_task_app/product/models/products_model.dart';
 import 'package:flutter/foundation.dart';
 
@@ -30,7 +28,7 @@ class ProductProvider extends ChangeNotifier {
         _products = data.map((e) => Products.fromJson(e)).toList();
       }
     } catch (e) {
-      log('Error loading products: $e');
+      throw Exception('Error loading products: $e');
     } finally {
       _isLoading = false;
       notifyListeners();
