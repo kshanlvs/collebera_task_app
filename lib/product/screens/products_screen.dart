@@ -1,3 +1,4 @@
+import 'package:collebera_task_app/routes_names.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +42,7 @@ class ProductScreen extends StatelessWidget {
                   return InkWell(
                     onTap: () {
                       context
-                          .go('/productDetails', extra: {"product": product});
+                          .go(RouteNames.productDetailScreen, extra: {"product": product});
                     },
                     child: ProductCard(
                       onTapAddToCart: () {
@@ -87,7 +88,7 @@ class ProductScreen extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.shopping_cart),
               onPressed: () {
-                context.go("/cartScreen");
+                context.go(RouteNames.cartScreen);
               },
             ),
             Positioned(
